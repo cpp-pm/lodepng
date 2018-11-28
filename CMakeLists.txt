@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Project is not versioned, so use date of last upstream commit.
-project(LodePNG LANGUAGES CXX VERSION "2018.10.29")
+project(LodePNG LANGUAGES CXX VERSION "0.0.0")
 
 set(LODEPNG_SRC "lodepng.cpp")
 
@@ -20,6 +20,7 @@ target_compile_definitions(lodepng PUBLIC "LODEPNG_DEBUG=$<CONFIG:Debug>")
 # Introduce variables:
 # * CMAKE_INSTALL_LIBDIR
 # * CMAKE_INSTALL_BINDIR
+# * CMAKE_INSTALL_INCLUDEDIR
 include(GNUInstallDirs)
 
 set(GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
@@ -27,7 +28,6 @@ set(VERSION_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}ConfigVersion.cmake")
 set(PROJECT_CONFIG "${GENERATED_DIR}/${PROJECT_NAME}Config.cmake")
 
 set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
-set(INCLUDE_INSTALL_DIR "include")
 
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 set(NAMESPACE "${PROJECT_NAME}::")
@@ -46,7 +46,7 @@ configure_package_config_file(
 install(
     TARGETS lodepng
     EXPORT "${TARGETS_EXPORT_NAME}"
-    INCLUDES DESTINATION "${INCLUDE_INSTALL_DIR}"
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
@@ -54,7 +54,7 @@ install(
 
 install(
     FILES ${LODEPNG_HEADERS}
-    DESTINATION ${INCLUDE_INSTALL_DIR}/lodepng
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/lodepng
 )
 
 install(
